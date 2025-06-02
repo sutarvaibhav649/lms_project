@@ -1,0 +1,63 @@
+.register-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    background: transparent;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.register-container h2,
+h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.main-form {
+    text-align: start;
+}
+
+.register-container form label {
+    display: block;
+    margin-top: 2px;
+    font-weight: 400;
+    text-transform: lowercase;
+    font-size: 14px;
+}
+
+.register-container input,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 4px;
+    border-radius: 0px;
+    border: none;
+    border-bottom: 2px solid blue;
+    background: transparent;
+}
+
+.register-container input:focus {
+    outline: none;
+}
+
+.sgn-btn button {
+    width: 80px;
+    height: 35px;
+    background-color: blue;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+.sgn-btn button:hover {
+    transition: 0.15s ease-in-out;
+    cursor: pointer;
+    background-color: rgb(84, 84, 251);
+}
+
+.student-fields {
+    text-align: start;
+}

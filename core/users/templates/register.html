@@ -1,0 +1,80 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="register-container">
+  <h2>Register</h2>
+  <form method="post" enctype="multipart/form-data" id="register-form">
+    {% csrf_token %}
+
+    <!-- Main User Form -->
+     <div class="main-form">
+        <h3>Account Details</h3>
+        {{ user_form.non_field_errors }}
+        <label>Username</label>
+        {{ user_form.username }}
+        <label>Email</label>
+        {{ user_form.email }}
+        <label>Password</label>
+        {{ user_form.password1 }}
+        <label>Confirm Password</label>
+        {{ user_form.password2 }}
+        <label>Role</label>
+        {{ user_form.role }}
+        <label>Phone Number</label>
+        {{ user_form.phone_no }}
+        <label>Profile Image</label>
+        {{ user_form.profile_image }}
+     </div>
+
+    <!-- Student Form -->
+    <div id="student-fields" style="display: none;">
+      <h3>Student Details</h3>
+      <label>PRN</label>
+      {{ student_form.prn }}
+      <label>Department</label>
+      {{ student_form.department }}
+      <label>Class</label>
+      {{ student_form.student_class }}
+    </div>
+
+    <!-- Faculty Form -->
+    <div id="faculty-fields" style="display: none;">
+      <h3>Faculty Details</h3>
+      <label>Department</label>
+      {{ faculty_form.department }}
+    </div>
+
+    <div class="sgn-btn">
+        <a href="{% url "login" %}"><button type="submit">Sign Up</button></a>
+    </div>
+  </form>
+</div>
+
+<!-- Role-based form toggling -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const roleField = document.getElementById('id_role');
+    const studentFields = document.getElementById('student-fields');
+    const facultyFields = document.getElementById('faculty-fields');
+
+    function toggleFields() {
+      if (roleField.value === 'student') {
+        studentFields.style.display = 'block';
+        facultyFields.style.display = 'none';
+      } else if (roleField.value === 'faculty') {
+        facultyFields.style.display = 'block';
+        studentFields.style.display = 'none';
+      } else {
+        facultyFields.style.display = 'none';
+        studentFields.style.display = 'none';
+      }
+    }
+
+    roleField.addEventListener('change', toggleFields);
+    toggleFields(); // initial call
+  });
+</script>
+{% endblock %}

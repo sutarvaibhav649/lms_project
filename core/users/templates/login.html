@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="login-container">
+  <h2>Login</h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    {% if errors.username %}
+      <p class="error-msg">{{ errors.username }}</p>
+    {% endif %}
+    <label for="id_username">Username</label>
+    <input type="text" name="username" id="id_username" placeholder="Enter your username" required value="{{ request.POST.username }}">
+
+    {% if errors.password1 %}
+      <p class="error-msg">{{ errors.password1 }}</p>
+    {% endif %}
+    <label for="id_password1">Password</label>
+    <input type="password" name="password1" id="id_password1" placeholder="Enter your password" required>
+
+    {% if errors.general %}
+      <p class="error-msg">{{ errors.general }}</p>
+    {% endif %}
+
+    <div class="submit-btn">
+      <button type="submit">Login</button>
+    </div>
+
+    <p class="bottom-text">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+  </form>
+</div>
+{% endblock %}
