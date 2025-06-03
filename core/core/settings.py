@@ -80,9 +80,13 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lms_project',         # 👈 Use your DB name
+        'USER': 'postgres',         # 👈 DB username
+        'PASSWORD': 'VaibhavSut@r1', # 👈 DB password
+        'HOST': 'localhost',
+        'PORT': '2004',
     }
 }
 

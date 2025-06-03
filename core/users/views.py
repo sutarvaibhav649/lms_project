@@ -1,40 +1,51 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .forms import CustomeUserForm, StudentForm, FacultyForm
+from .forms import CustomUserCreationForm, StudentForm, FacultyForm
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+##======================= Home view Starts ======================
+
+def home_view(request):
+    return render(request,'home.html')
+##======================= Home view Ends ========================
+
+
 ##=================== Register view Starts =======================
 def register_view(request):
-    user_form = CustomeUserForm()
-    student_form = StudentForm()
-    faculty_form = FacultyForm()
-
     if request.method == 'POST':
-        user_form = CustomeUserForm(request.POST, request.FILES)
-        if user_form.is_valid():
-            user = user_form.save()
-            role = user.role
+        user_form = CustomUserCreationForm(request.POST, request.FILES)
+        student_form = StudentForm(request.POST, prefix='student')
+        faculty_form = FacultyForm(request.POST, prefix='faculty')
 
-            if role == 'student':
-                student_form = StudentForm(request.POST)
-                if student_form.is_valid():
-                    student = student_form.save(commit=False)
-                    student.user = user
-                    student.save()
-            elif role == 'faculty':
-                faculty_form = FacultyForm(request.POST)
-                if faculty_form.is_valid():
-                    faculty = faculty_form.save(commit=False)
-                    faculty.user = user
-                    faculty.save()
+        if user_form.is_valid():
+            user = user_form.save(commit=False)
+            role = user_form.cleaned_data.get('role')
+            user.save()
+
+            if role == 'student' and student_form.is_valid():
+                student = student_form.save(commit=False)
+                student.user = user
+                student.save()
+
+            elif role == 'faculty' and faculty_form.is_valid():
+                faculty = faculty_form.save(commit=False)
+                faculty.user = user
+                faculty.save()
 
             return redirect('login')
+
+    else:
+        user_form = CustomUserCreationForm()
+        student_form = StudentForm(prefix='student')
+        faculty_form = FacultyForm(prefix='faculty')
 
     return render(request, 'register.html', {
         'user_form': user_form,
         'student_form': student_form,
-        'faculty_form': faculty_form
+        'faculty_form': faculty_form,
     })
+
 ##=================== Register view Ends =========================
 ##=================== Login view starts ==========================
 def login_view(request):
@@ -56,11 +67,11 @@ def login_view(request):
 
                 # Redirect by role
                 if user.role == 'student':
-                    return redirect('student_dashboard')  # Define in your urls/views
+                    return redirect('home')  # Define in your urls/views
                 elif user.role == 'faculty':
-                    return redirect('faculty_dashboard')
+                    return redirect('home')
                 elif user.role == 'admin':
-                    return redirect('admin_dashboard')
+                    return redirect('home')
                 else:
                     errors['general'] = "Unknown user role."
             else:

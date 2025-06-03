@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Student,Faculty,User
 
 ##================== Custome user Form starts ===========================
-class CustomeUserForm(UserCreationForm):
+class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username','email','password1','password2','role','phone_no','profile_image']

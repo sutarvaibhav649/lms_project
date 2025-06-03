@@ -6,54 +6,95 @@
 {% block content %}
 <div class="register-container">
   <h2>Register</h2>
+
   <form method="post" enctype="multipart/form-data" id="register-form">
     {% csrf_token %}
+    {{ user_form.non_field_errors }}
 
-    <!-- Main User Form -->
-     <div class="main-form">
-        <h3>Account Details</h3>
-        {{ user_form.non_field_errors }}
-        <label>Username</label>
-        {{ user_form.username }}
-        <label>Email</label>
-        {{ user_form.email }}
-        <label>Password</label>
-        {{ user_form.password1 }}
-        <label>Confirm Password</label>
-        {{ user_form.password2 }}
-        <label>Role</label>
-        {{ user_form.role }}
-        <label>Phone Number</label>
-        {{ user_form.phone_no }}
-        <label>Profile Image</label>
-        {{ user_form.profile_image }}
-     </div>
+    <h3>Account Details</h3>
 
-    <!-- Student Form -->
+    <label>Username</label>
+    {{ user_form.username }}
+    {% if user_form.username.errors %}
+      <p class="error">{{ user_form.username.errors.0 }}</p>
+    {% endif %}
+
+    <label>Email</label>
+    {{ user_form.email }}
+    {% if user_form.email.errors %}
+      <p class="error">{{ user_form.email.errors.0 }}</p>
+    {% endif %}
+
+    <label>Password</label>
+    {{ user_form.password1 }}
+    {% if user_form.password1.errors %}
+      <p class="error">{{ user_form.password1.errors.0 }}</p>
+    {% endif %}
+
+    <label>Confirm Password</label>
+    {{ user_form.password2 }}
+    {% if user_form.password2.errors %}
+      <p class="error">{{ user_form.password2.errors.0 }}</p>
+    {% endif %}
+
+    <label>Role</label>
+    {{ user_form.role }}
+    {% if user_form.role.errors %}
+      <p class="error">{{ user_form.role.errors.0 }}</p>
+    {% endif %}
+
+    <label>Phone Number</label>
+    {{ user_form.phone_no }}
+    {% if user_form.phone_no.errors %}
+      <p class="error">{{ user_form.phone_no.errors.0 }}</p>
+    {% endif %}
+
+    <label>Profile Image</label>
+    {{ user_form.profile_image }}
+    {% if user_form.profile_image.errors %}
+      <p class="error">{{ user_form.profile_image.errors.0 }}</p>
+    {% endif %}
+
+    <!-- Student Fields -->
     <div id="student-fields" style="display: none;">
       <h3>Student Details</h3>
       <label>PRN</label>
       {{ student_form.prn }}
+      {% if student_form.prn.errors %}
+        <p class="error">{{ student_form.prn.errors.0 }}</p>
+      {% endif %}
+
       <label>Department</label>
       {{ student_form.department }}
+      {% if student_form.department.errors %}
+        <p class="error">{{ student_form.department.errors.0 }}</p>
+      {% endif %}
+
       <label>Class</label>
       {{ student_form.student_class }}
+      {% if student_form.student_class.errors %}
+        <p class="error">{{ student_form.student_class.errors.0 }}</p>
+      {% endif %}
     </div>
 
-    <!-- Faculty Form -->
+    <!-- Faculty Fields -->
     <div id="faculty-fields" style="display: none;">
       <h3>Faculty Details</h3>
       <label>Department</label>
       {{ faculty_form.department }}
+      {% if faculty_form.department.errors %}
+        <p class="error">{{ faculty_form.department.errors.0 }}</p>
+      {% endif %}
     </div>
 
+    <!-- Submit Button -->
     <div class="sgn-btn">
-        <a href="{% url "login" %}"><button type="submit">Sign Up</button></a>
+      <button type="submit">Sign Up</button>
     </div>
   </form>
 </div>
 
-<!-- Role-based form toggling -->
+<!-- Role-based toggle and disable logic -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const roleField = document.getElementById('id_role');
@@ -61,20 +102,28 @@
     const facultyFields = document.getElementById('faculty-fields');
 
     function toggleFields() {
-      if (roleField.value === 'student') {
+      const role = roleField.value;
+
+      if (role === 'student') {
         studentFields.style.display = 'block';
         facultyFields.style.display = 'none';
-      } else if (roleField.value === 'faculty') {
+        studentFields.querySelectorAll('input').forEach(el => el.disabled = false);
+        facultyFields.querySelectorAll('input').forEach(el => el.disabled = true);
+      } else if (role === 'faculty') {
         facultyFields.style.display = 'block';
         studentFields.style.display = 'none';
+        facultyFields.querySelectorAll('input').forEach(el => el.disabled = false);
+        studentFields.querySelectorAll('input').forEach(el => el.disabled = true);
       } else {
-        facultyFields.style.display = 'none';
         studentFields.style.display = 'none';
+        facultyFields.style.display = 'none';
+        studentFields.querySelectorAll('input').forEach(el => el.disabled = true);
+        facultyFields.querySelectorAll('input').forEach(el => el.disabled = true);
       }
     }
 
     roleField.addEventListener('change', toggleFields);
-    toggleFields(); // initial call
+    toggleFields();  // initial load
   });
 </script>
 {% endblock %}

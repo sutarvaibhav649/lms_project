@@ -2,18 +2,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% block title %}
-            Home
-        {% endblock %}
-    </title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Home{% endblock %}</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'index.css' %}">
+  <link rel="stylesheet" href="{% static 'users/register.css' %}">
+  <link rel="stylesheet" href="{% static 'users/login.css' %}">
 </head>
-<link rel="stylesheet" href="{% static "index.css" %}">
-<link rel="stylesheet" href="{% static "users/register.css" %}">
-<link rel="stylesheet" href="{% static "users/login.css" %}">
+
 <body>
-    {% block content %}{% endblock %}
+  <nav>
+    <div class="left">
+      <ul>
+        <li><a href="{% url "home" %}">LOGO</a></li>               
+      </ul>
+    </div>
+
+    <div class="center">
+      <ul>
+        <li><a href="{% url "home" %}">Home</a></li>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">Track</a></li>
+        <li><a href="#">Quizzes</a></li>
+        <li><a href="#">Challenges</a></li>
+      </ul>
+    </div>
+
+    <div class="right">
+      <ul>
+        {% if request.user.is_authenticated %}
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+
+          <li>
+            {% if request.user.role == 'student' %}
+              <a href="{% url 'student_dashboard' %}">
+            {% elif request.user.role == 'faculty' %}
+              <a href="{% url 'faculty_dashboard' %}">
+            {% else %}
+              <a href="#">
+            {% endif %}
+                <div class="profile">
+                  {% if request.user.profile_image %}
+                    <img src="{{ request.user.profile_image.url }}" alt="Profile">
+                  {% else %}
+                    <img src="{% static 'images/default_profile.jpg' %}" alt="Default">
+                  {% endif %}
+                </div>
+              </a>
+          </li>
+        {% else %}
+          <li><a href="{% url 'register' %}">Register</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  {% block content %}{% endblock %}
 </body>
 </html>
