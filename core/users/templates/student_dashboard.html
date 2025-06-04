@@ -1,0 +1,76 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}
+    dashboard
+{% endblock %}
+{% block content %}
+<div class="main">
+    {% comment %} student profile lft side starts {% endcomment %}
+    <div class="student_profile">
+        <div class="std-top">
+            <div class="prf-img">
+                {% if request.user.profile_image %}
+                <img src="{{ request.user.profile_image.url }}" alt="Profile">
+                {% else %}
+                    <img src="{% static 'images/default_profile.jpg' %}" alt="Default">
+                {% endif %}
+            </div>
+            <p> {{request.user.username}} </p>
+        </div>
+        <div class="prf-info">
+            <ul>
+                <li>PRN: {{request.user.student.prn}}</li>
+                <li>{{request.user.email}}</li>
+                <li>class: {{request.user.student.student_class}}</li>
+                <li>dept.: {{request.user.student.department}}</li>
+            </ul>
+        </div>
+    </div>
+     {% comment %} student profile lft side ends {% endcomment %}
+      {% comment %} student info right side starts {% endcomment %}
+    <div class="student_info">
+        <div class="leaderboard">
+            <p>leaderboard</p>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+            </ul>
+        </div>
+        <div class="marktracker">
+            <div class="top">
+                <div class="first">
+                    <p>Marks</p>
+                    <p>last quiz: 20/50</p>
+                    <p>course name</p>
+                </div>
+                <div class="second">
+                    <p>Rank</p>
+                    <div class="circle">
+                        <p>14</p>
+                    </div>
+                    <div class="tick">
+                        <div class="crlctr">
+                            <div class="lft"></div>
+                            <div class="slant"></div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="third">
+                <div class="quizcard">
+                    <p>upcoming quiz</p>
+                </div>
+                <div class="badges">
+                    <p>badges section</p>
+                </div>
+            </div>
+        </div>
+    </div>
+     {% comment %} student nfo right side ends {% endcomment %}
+</div>
+{% endblock %}

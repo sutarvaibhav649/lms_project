@@ -10,19 +10,24 @@
   <link rel="stylesheet" href="{% static 'index.css' %}">
   <link rel="stylesheet" href="{% static 'users/register.css' %}">
   <link rel="stylesheet" href="{% static 'users/login.css' %}">
+  <link rel="stylesheet" href="{% static 'users/student_dashboard.css' %}">
 </head>
 
 <body>
   <nav>
     <div class="left">
-      <ul>
-        <li><a href="{% url "home" %}">LOGO</a></li>               
-      </ul>
+      <li>
+        <div class="burger" id="burger">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+      </li>
     </div>
 
-    <div class="center">
+    <div class="center responsive-center" id="nav-links">
       <ul>
-        <li><a href="{% url "home" %}">Home</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="#">Courses</a></li>
         <li><a href="#">Track</a></li>
         <li><a href="#">Quizzes</a></li>
@@ -32,34 +37,68 @@
 
     <div class="right">
       <ul>
-        {% if request.user.is_authenticated %}
-          <li><a href="{% url 'logout' %}">Logout</a></li>
+        <li class="dropdown">
+        <div class="profile" id="profile-toggle">
+          {% if request.user.profile_image %}
+            <img src="{{ request.user.profile_image.url }}" alt="Profile">
+          {% else %}
+            <img src="{% static 'images/default_profile.jpg' %}" alt="Default">
+          {% endif %}
+        </div>
 
-          <li>
-            {% if request.user.role == 'student' %}
-              <a href="{% url 'student_dashboard' %}">
-            {% elif request.user.role == 'faculty' %}
-              <a href="{% url 'faculty_dashboard' %}">
-            {% else %}
-              <a href="#">
-            {% endif %}
-                <div class="profile">
-                  {% if request.user.profile_image %}
-                    <img src="{{ request.user.profile_image.url }}" alt="Profile">
-                  {% else %}
-                    <img src="{% static 'images/default_profile.jpg' %}" alt="Default">
-                  {% endif %}
-                </div>
-              </a>
-          </li>
-        {% else %}
-          <li><a href="{% url 'register' %}">Register</a></li>
-          <li><a href="{% url 'login' %}">Login</a></li>
-        {% endif %}
+        <ul class="dropdown-menu" id="dropdown-menu">
+          {% if request.user.role == 'student' %}
+            <li><a href="{% url 'student_dashboard' %}">Dashboard</a></li>
+          {% elif request.user.role == 'faculty' %}
+            <li><a href="{% url 'faculty_dashboard' %}">Dashboard</a></li>
+          {% endif %}
+          <li><a href="#">Edit Profile</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+      </li>
       </ul>
     </div>
   </nav>
 
   {% block content %}{% endblock %}
 </body>
+<div class="sidebar" id="sidebar">
+  <ul>
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="#">Courses</a></li>
+    <li><a href="#">Track</a></li>
+    <li><a href="#">Quizzes</a></li>
+    <li><a href="#">Challenges</a></li>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+  </ul>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtn = document.getElementById('profile-toggle');
+    const dropdown = document.getElementById('dropdown-menu');
+    const burger = document.getElementById("burger");
+    const sidebar = document.getElementById("sidebar");
+    toggleBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      dropdown.classList.toggle('show');
+    });
+
+    // Close dropdown if clicking outside
+    document.addEventListener('click', function (e) {
+      if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+    burger.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+    });
+
+    // Optional: click outside to close
+    document.addEventListener("click", (e) => {
+      if (!sidebar.contains(e.target) && !burger.contains(e.target)) {
+        sidebar.classList.remove("active");
+      }
+    });
+  });
+</script>
 </html>

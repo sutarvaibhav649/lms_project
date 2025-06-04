@@ -89,7 +89,7 @@ def logout_view(request):
 ##=================== student dashboard starts =====================
 @login_required
 def student_dashboard(request):
-    return HttpResponse("<h1>Student Dashboard</h1>")
+    return render(request,'student_dashboard.html')
 ##=================== student dashboard ends =====================
 
 ##=================== faculty dashboard starts =====================
