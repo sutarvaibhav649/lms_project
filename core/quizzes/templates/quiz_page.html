@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Quiz Page{% endblock %}
+
+{% block content %}
+<div class="quiz-container">
+  <div class="quiz-header">
+    <h2>Quiz: Data Structures Basics</h2>
+    <p>Duration: 30 minutes</p>
+  </div>
+
+  <form class="quiz-form">
+    {% comment %} Replace with dynamic questions later {% endcomment %}
+    {% for i in "1234" %}
+    <div class="quiz-question">
+      <p><strong>Q{{ forloop.counter }}.</strong> What is the time complexity of binary search?</p>
+      <label><input type="radio" name="q{{ forloop.counter }}"> O(n)</label><br>
+      <label><input type="radio" name="q{{ forloop.counter }}"> O(log n)</label><br>
+      <label><input type="radio" name="q{{ forloop.counter }}"> O(n log n)</label><br>
+      <label><input type="radio" name="q{{ forloop.counter }}"> O(1)</label>
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="submit-btn">Submit Quiz</button>
+  </form>
+</div>
+{% endblock %}

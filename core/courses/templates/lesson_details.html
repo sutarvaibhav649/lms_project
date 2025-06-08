@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Lesson View{% endblock %}
+
+{% block content %}
+<div class="lesson-container">
+  <div class="lesson-header">
+    <h1>Lesson Title</h1>
+    <p>Course: Introduction to DSA</p>
+  </div>
+
+  <div class="lesson-content">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eleifend metus sed libero convallis, nec eleifend justo bibendum. Suspendisse potenti. Duis ultricies placerat quam.
+    </p>
+    <p>
+      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+    </p>
+    <p>
+      <strong>Tip:</strong> Practice after every topic to retain better!
+    </p>
+  </div>
+
+  <div class="lesson-actions">
+    <button class="complete-btn">Mark as Complete</button>
+    <div class="navigation">
+      <button class="nav-btn">← Previous</button>
+      <button class="nav-btn">Next →</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

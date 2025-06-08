@@ -11,6 +11,10 @@
   <link rel="stylesheet" href="{% static 'users/register.css' %}">
   <link rel="stylesheet" href="{% static 'users/login.css' %}">
   <link rel="stylesheet" href="{% static 'users/student_dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'users/home.css' %}">
+  <link rel="stylesheet" href="{% static 'users/course_list.css' %}">
+  <link rel="stylesheet" href="{% static 'users/lesson_details.css' %}">
+  <link rel="stylesheet" href="{% static 'users/quiz_page.css' %}">
 </head>
 
 <body>
@@ -28,9 +32,9 @@
     <div class="center responsive-center" id="nav-links">
       <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="#">Courses</a></li>
-        <li><a href="#">Track</a></li>
-        <li><a href="#">Quizzes</a></li>
+        <li><a href="{% url "courses:course_list" %}">Courses</a></li>
+        <li><a href="{% url "courses:lesson_list" %}">Track</a></li>
+        <li><a href="{% url "quizzes:quiz_page" %}">Quizzes</a></li>
         <li><a href="#">Challenges</a></li>
       </ul>
     </div>

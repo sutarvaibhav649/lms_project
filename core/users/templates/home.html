@@ -1,8 +1,42 @@
 {% extends "index.html" %}
 {% load static %}
-{% block title %}
-    Home
-{% endblock %}
+
+{% block title %}Welcome to CodeLMS{% endblock %}
+
 {% block content %}
-    <p>This is the home page</p>
+<div class="hero-section">
+  <div class="hero-text">
+    <h1>Empower Your Competitive Journey</h1>
+    <p>Master DSA, build real projects, and prepare for interviews — all in one platform.</p>
+    <div class="hero-buttons">
+      <a href="{% url 'register' %}"><button class="btn primary-btn">Get Started</button></a>
+      <a href="{% url 'login' %}"><button class="btn secondary-btn">Login</button></a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="{% static 'images/lms_banner.svg' %}" alt="LMS Illustration">
+  </div>
+</div>
+
+<div class="features-section">
+  <h2>Why Choose CodeLMS?</h2>
+  <div class="features-grid">
+    <div class="feature-box">
+      <h3>📚 Structured Courses</h3>
+      <p>Learn with beginner-to-advanced tracks created by experts.</p>
+    </div>
+    <div class="feature-box">
+      <h3>🧠 Smart Quizzes</h3>
+      <p>Evaluate your progress with smart timed quizzes and real feedback.</p>
+    </div>
+    <div class="feature-box">
+      <h3>💻 Coding Challenges</h3>
+      <p>Practice real interview questions in our integrated code editor.</p>
+    </div>
+    <div class="feature-box">
+      <h3>🏆 Earn Badges</h3>
+      <p>Unlock achievements as you progress through challenges and lessons.</p>
+    </div>
+  </div>
+</div>
 {% endblock %}
